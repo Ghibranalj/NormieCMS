@@ -1,5 +1,7 @@
 {
   "name": "normiecms",
+  "author": "John Doe <john@doe.com>",
+  "homepage": "https://github.com/Ghibranalj/NormieCMS",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -15,18 +17,18 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
+    "simple-git": "^3.6.0",
     "typescript": "^4.6.3",
     "web-vitals": "^0.2.4"
   },
   "main": "public/main.js",
-  "homepage": "./",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "concurrently -k \"cross-env BROWSER=none npm run start\" \"npm run electron:start\"",
-    "distribute": "npm run build && electron-builder -c.extraMetadata.main=build/main.js",
+    "dist": "npm run build && electron-builder -c.extraMetadata.main=build/main.js",
     "electron:start": "wait-on http://127.0.0.1:3000 && electron ."
   },
   "build": {
@@ -40,6 +42,37 @@
     ],
     "directories": {
       "buildResources": "assets"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ],
+      "extraFiles": [
+        {
+          "from": "binaries/win",
+          "to": "Binaries",
+          "filter": [
+            "**/*"
+          ]
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "rpm",
+        "deb",
+        "zip"
+      ],
+      "extraFiles": [
+        {
+          "from": "binaries/linux",
+          "to": "Binaries",
+          "filter": [
+            "**/*"
+          ]
+        }
+      ]
     }
   },
   "eslintConfig": {
